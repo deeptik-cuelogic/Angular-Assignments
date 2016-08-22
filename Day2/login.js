@@ -25,45 +25,45 @@ app.service("employees", function(){
   	return [{
                 "id": 1,
                 "name": "Prasanna",
-                "department": "Developer",
-                "salary": 1000,
-                "email": 'abc@yopmail.com'
+                "email": 'abc@yopmail.com',
+                "age": 29,
+                "gender": 'Male'
             },{
                 "id": 2,
                 "name": "Ayush",
-                "department": "I.T",
-                "salary": 1000,
-                "image": "resource/images/IMG_3050.JPG"
+                "email": 'pqr@yopmail.com',
+                "age": 30,
+                "gender": 'Male'
             }, {
                 "id": 3,
                 "name": "Bobo",
-                "department": "Project manager",
-                "salary": 100000,
-                "image": "resource/images/textures-selection-nice-high-resolution_2165080.jpg"
+                "email": 'pqr@yopmail.com',
+                "age": 32,
+                "gender": 'Male'
             }, {
                 "id": 4,
                 "name": "Baby",
-                "department": "developer",
-                "salary": 2000,
-                "image": "resource/images/404.png"
+                "email": 'pqr@yopmail.com',
+                "age": 22,
+                "gender": 'Female'
             }, {
                 "id": 5,
                 "name": "Nilesh",
-                "department": "Designer",
-                "salary": 5500,
-                "image": "resource/images/6309_1280x800.jpg"
+                "email": 'pqr@yopmail.com',
+                "age": 30,
+                "gender": 'Male'
             }, {
                 "id": 6,
                 "name": "amol",
-                "department": "Manager",
-                "salary": 100500,
-                "image": "resource/images/brand-avatar.jpg"
+                "email": 'pqr@yopmail.com',
+                "age": 32,
+                "gender": 'Male'
             }, {
                 "id": 7,
                 "name": "ganesh",
-                "department": "Accountant",
-                "salary": 1000,
-                "image": "resource/images/ipgeo.png"
+                "email": 'pqr@yopmail.com',
+                "age": 22,
+                "gender": 'Male'
             }]
   };
 });
@@ -102,6 +102,24 @@ app.service("loginService", ['credentials', '$http', '$rootScope', '$localStorag
         };
 }]);
 
+
+app.directive('ngConfirmRemove', [
+  function(){
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs){
+        element.bind('click', function(e){
+          var message = attrs.ngConfirmRemove;
+          if(message && !confirm(message)){
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          }
+        });
+      }
+    }
+  }
+]);
+
 app.controller("LoginController", function($scope, loginService, $location, $window){
 
   //loginService.clearCredentials();
@@ -121,5 +139,42 @@ app.controller("LoginController", function($scope, loginService, $location, $win
 });
 
 app.controller('dashboardController', function($scope, employees){
+
   $scope.emp_list = employees.userList();
+  $scope.sort_reverse  = false
+  $scope.sort_type = 'name';
+
+  $scope.removeRow = function(name){
+    var index = -1;
+    var comArr = eval( $scope.emp_list );
+    for( var i = 0; i < comArr.length; i++ ) {
+      if( comArr[i].name === name ) {
+        index = i;
+        break;
+      }
+    }
+    if( index === -1 ) {
+      alert( "Something gone wrong" );
+    }
+    $scope.emp_list.splice( index, 1 );
+  };
+
+   $scope.cancel = function() {
+    for (var i = $scope.users.length; i--;) {
+      var user = $scope.users[i];
+      // undelete
+      if (user.isDeleted) {
+        delete user.isDeleted;
+      }
+      // remove new
+      if (user.isNew) {
+        $scope.users.splice(i, 1);
+      }
+    };
+  };
+});
+
+
+app.controller('employeeController', function($scope){
+
 });

@@ -1,7 +1,8 @@
 <html ng-app="login">
-  <title>LOGIN</title>
+  <title>Employee Details</title>
   <head>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
@@ -9,19 +10,57 @@
   </head>
   <body>
     <div class="container" ng-controller="dashboardController">
+      <div><p> Employee Details</p></div>
+      <input type="button" value="Add" class="btn btn-primary"/>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Email</th>
+            <th>
+              <a href="#" ng-click="sort_type = 'id'; sort_reverse = !sort_reverse"">
+                Id
+                <span ng-show="sort_type == 'id' && !sort_reverse" class="fa fa-caret-down"></span>
+                <span ng-show="sort_type == 'id' && sort_reverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="sort_type = 'name'; sort_reverse = !sort_reverse"">
+                Name
+                <span ng-show="sort_type == 'name' && !sort_reverse" class="fa fa-caret-down"></span>
+                <span ng-show="sort_ype == 'name' && sort_reverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="sort_type = 'email'; sort_reverse = !sort_reverse"">
+                Email
+                <span ng-show="sort_type == 'email' && !sort_reverse" class="fa fa-caret-down"></span>
+                <span ng-show="sort_type == 'email' && sort_reverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="sort_type = 'age'; sort_reverse = !sort_reverse"">
+                Age
+                <span ng-show="sort_type == 'age' && !sort_reverse" class="fa fa-caret-down"></span>
+                <span ng-show="sort_type == 'age' && sort_reverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="sort_type = 'gender'; sort_reverse = !sort_reverse"">
+                Gender
+                <span ng-show="sort_type == 'gender' && !sort_reverse" class="fa fa-caret-down"></span>
+                <span ng-show="sort_type == 'gender' && sort_reverse" class="fa fa-caret-up"></span>
+              </a>
+            </th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="emp in emp_list">
+          <tr ng-repeat="emp in emp_list | orderBy:sort_type:sort_reverse">
             <td>{{emp.id}}</td>
             <td>{{emp.name}}</td>
             <td>{{emp.email}}</td>
+            <td>{{emp.age}}</td>
+            <td>{{emp.gender}}</td>
+            <td><input type="button" value="Remove" class="btn btn-primary" ng-click="removeRow(emp.name)" ng-confirm-remove="Do you want to delete a record?"/></td>
           </tr>
         </tbody>
       </table>
