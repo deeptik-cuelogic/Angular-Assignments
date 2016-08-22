@@ -5,12 +5,26 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
-
     <script type="text/javascript" src="login.js"></script>
   </head>
   <body>
-    <div class="login-container" ng-controller="dashboardController">
-      <p>Hi {{name}}</p>
+    <div class="container" ng-controller="dashboardController">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="emp in emp_list">
+            <td>{{emp.id}}</td>
+            <td>{{emp.name}}</td>
+            <td>{{emp.email}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>
